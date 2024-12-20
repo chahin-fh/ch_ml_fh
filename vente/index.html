@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles2.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="author" content="TARGOTO Christian - ct@chrislink.net - ctargoto@gmail.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des ventes en ligne</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <ul id="left">
+            <li class="left">A propos</li>
+            <li class="left"><a href="../produit/index.html">Produits</a></li>
+            <li class="left"><a href="../vente/index.html">Vents</a></li>
+            <li class="left"><a href="#">Requetes</a></li>
+            <li class="left">Aide</li>
+            <li class="right"><a href="../connexion/index.html">Deconnexion</a></li>
+        </ul>
+    </nav>
+<div class="container">
+    <!-- Section du formulaire -->
+    <div class="form-section">
+        <form method="POST">
+            <input type="hidden" id="currentUrl" name="currentUrl" value="/gesvente/ventes.php">
+            <div class="buttons">
+                <button type="submit" class="submit-button">Enregistrer les ventes</button>
+                <button type="button" class="refresh-button"><a href="#">Actualiser la page</a></button>
+            </div>
+            <p class="message"></p>
+
+            <!-- Product Row Template (hidden by default) -->
+            <div class="product-row" id="product-template" style="display:none;">
+                <div>
+                    <label for="produit">Produit :</label>
+                    <select class="produit" name="produit[]">
+                        <option value="">--Sélectionner un produit--</option>
+                        <!-- Add product options dynamically via JS -->
+                    </select>
+                </div>
+                <div>
+                    <label for="quantite">Quantité :</label>
+                    <input type="number" class="quantite" name="quantite[]" min="1" placeholder="Entrez la quantité">
+                </div>
+                <div>
+                    <label for="prix">Prix:</label>
+                    <input type="text" class="prix" name="prix[]" readonly>
+                </div>
+                <div>
+                    <button type="button" class="remove-product">Supprimer</button>
+                </div>
+            </div>
+
+            <div id="inputContainer">
+                <!-- The first product row will be added by default -->
+            </div>
+
+            <div>
+                <button type="button" class="add-product">Ajouter un produit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Section des ventes -->
+    <div class="sales-section">
+        <h2>Les dernières ventes enregistrées</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Désignation Produit</th>
+                    <th>Quantité Vendue</th>
+                    <th>Date de la Vente</th>
+                    <th>Annuler la vente</th>
+                </tr>
+            </thead>
+            <tbody id="sales-list">
+                <!-- Sales data will go here -->
+            </tbody>
+        </table>
+        <br><br>
+        <a href="#" id="db">Voir la liste complète des ventes du jour</a> 
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="main.js"></script>
+<footer>
+    <p>&copy 2024 Touts Droits reservée .</p>
+    <p>Site web crée par "<a href="https://mail.google.com/mail/u/0/#inbox?compose=VpCqJbPWTpHzVQGWQpDDHrdLRjXVzRHFwLwfNlCfdZbdsCmdSDDvRnkVKQqTWwqRbjSmdsL">malali3b@gmail.com</a>"</p>
+</footer>
+</body>
+</html>
