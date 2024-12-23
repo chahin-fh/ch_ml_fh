@@ -3,163 +3,20 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title></title>
+    <title>Ventes</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <style>
-        /* Styles globaux */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-}
-
-/* Navigation */
-nav {
-    background-color:#93441A;
-    padding: 20px 0; 
-    border-radius: 20px;
-    margin-top: 3px;
-}
-nav ul {
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
-    display: flex; 
-    justify-content: center; 
-    
-}
-nav ul li {
-    margin: 0 10px; 
-    color: white; 
-    font-size: 18px; 
-    font-family: Arial, sans-serif; 
-}
-nav ul li a{
-    text-decoration: none;
-    color: white;
-}
-nav ul li:hover {
-    color: #ffb400;
-    cursor: pointer; 
-}
-
-/* Bouton PDF */
-.btn {
-    background-color: #dc3545;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.btn:hover {
-    background-color: #c82333;
-}
-
-/* Contenu principal */
-main {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Formulaire */
-form {
-    margin-bottom: 20px;
-}
-
-form label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-form input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 200px;
-}
-
-form input[type="submit"] {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-form input[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* Tableau */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-table th {
-    background-color: #007bff;
-    color: white;
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table tr:hover {
-    background-color: #ddd;
-}
-
-/* Message total des ventes */
-p {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
-    color: #28a745;
-}
-
-footer {
-    background-color:#B67332;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
-    border-radius: 30px;
-    height: 80px;
-
-}
-footer p{
-    color: white;
-}
-footer p a{
-    text-decoration: none;
-    color: white;
-}
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include jsPDF and html2canvas libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
     <nav>
         <ul id="left">
             <li class="left">A propos</li>
             <li class="left"><a href="../produit/index.html">Produits</a></li>
-            <li class="left"><a href="../vente/index.html">Vents</a></li>
+            <li class="left"><a href="../vente/index.html">Ventes</a></li>
             <li class="left"><a href="#">Requetes</a></li>
             <li class="left">Aide</li>
             <li class="right"><a href="../connexion/index.html">Deconnexion</a></li>
@@ -168,9 +25,9 @@ footer p a{
     <main>
         <button id="convertToPdf" class="btn btn-danger">Convertir la page en PDF</button>
         <h1>Rechercher des ventes effectuées à une date donnée</h1>
-        <form action="index.php" method="post">
+        <form method="post">
             <label for="requete">Date:</label>
-            <input type="text" name="requete" id="requete" placeholder="AAAA-MM-JJ">
+            <input type="date" name="requete" id="requete">
             <input type="submit" value="Recherche">
         </form>
         <table>
@@ -178,48 +35,81 @@ footer p a{
                 <tr>
                     <th>Produit</th>
                     <th>Prix</th>
-                    <th>Quantite</th>
+                    <th>Quantité</th>
                     <th>Date</th>
                     <th>Annuler une vente</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    $requete = $_POST['requete'];
-                    $cnx = mysqli_connect("127.0.0.1","root","","ifbreak");
-                    $requete = "SELECT produit, prix, quantite, date FROM ventes WHERE date = ?";
-                    $reponse = $cnx->query($requete);
-                    while ($donnees = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($donnees['produit']) . "</td>";
-                        echo "<td>" . htmlspecialchars($donnees['prix']) . "</td>";
-                        echo "<td>" . htmlspecialchars($donnees['quantite']) . "</td>";
-                        echo "<td>" . htmlspecialchars($donnees['date']) . "</td>";
-                        echo "<td><a href='annuler.php?id=" . htmlspecialchars($donnees['id']) . "'>Annuler</a></td>";
-                        echo "</tr>";
-                    }                    
-                ?>
+            <?php
+                include("../connect.php");
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $requete_date = isset($_POST['requete']) ? $_POST['requete'] : null;
+
+                    if ($requete_date) {
+                        $stmt = $cnx->prepare("SELECT id, , prix, quantite, date FROM vent WHERE date = ?");
+                        $stmt->bind_param("s", $requete_date);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if ($result->num_rows > 0) {
+                            while ($donnees = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($donnees['produit']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['prix']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['quantite']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['date']) . "</td>";
+                                echo "<td>
+                                        <form action='annuler.php' method='post'>
+                                            <input type='hidden' name='id' value='" . htmlspecialchars($donnees['id']) . "'>
+                                            <button type='submit' class='btn btn-danger'>Annuler</button>
+                                        </form>
+                                      </td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>Aucune vente trouvée pour cette date.</td></tr>";
+                        }
+
+                        $stmt->close();
+                    } else {
+                        echo "<tr><td colspan='5'>Aucune date n'a été fournie.</td></tr>";
+                    }
+                }
+            ?>
             </tbody>
         </table>
-        <?php
-            $cnx = mysqli_connect("127.0.0.1","root","","ifbreak");
-            $req="SELECT SUM(prix * quantite) AS total_ventes FROM ventes WHERE date = ?";
-            $result = $cnx->query($req);
-            $donnees = $result->fetch_assoc();
-            echo "<p>Le total des ventes est de " . htmlspecialchars($donnees['total_ventes']) . "</p>";
-        ?>
     </main>
     <script>
         document.getElementById('convertToPdf').addEventListener('click', function() {
-            var pdf = new PDF('p', 'pt', 'letter');
-            pdf.addHTML(document.body, function() {
+            const { jsPDF } = window.jspdf;
+            html2canvas(document.body).then(canvas => {
+                let pdf = new jsPDF('p', 'pt', 'letter');
+                let imgData = canvas.toDataURL('image/png');
+                let imgWidth = 595.28; 
+                let pageHeight = 841.89; 
+                let imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
                 pdf.save('ventes.pdf');
             });
         });
     </script>
     <footer>
-        <p>&copy 2024 Touts Droits reservée .</p>
-        <p>Site web crée par "<a href="mailto:anoirlool@gmail.com">malali3b@gmail.com</a>"</p>
+        <p>&copy 2024 Tous droits réservés.</p>
+        <p>Site web créé par <a href="mailto:malali3b@gmail.com">malali3b@gmail.com</a></p>
     </footer>
 </body>
 </html>

@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 extract($_POST);
 $arr1 = [$opt_0 , $opt_1 , $opt_2];
 $arr2 = [$quant_0 , $quant_1 , $quant_2];
-$d = date("Y-m-d h:i:sa");
+$d = date("Y-m-d");
 for($i = 0 ; $i<3 ; $i++){
-$req = "INSERT INTO vent (DP,QV,DV) VALUES ('$arr1[$i]','$arr2[$i]','$d');";
+$req = "INSERT INTO vent (DP,QV,Dv) VALUES ('$arr1[$i]','$arr2[$i]','$d');";
 $res = mysqli_query($cnx,$req);
 }
 }
