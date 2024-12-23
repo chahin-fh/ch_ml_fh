@@ -19,7 +19,7 @@ $res = mysqli_query($cnx,$req);
             <li class="left">A propos</li>
             <li class="left"><a href="../produit/index.html">Produits</a></li>
             <li class="left"><a href="../vente/index.html">Vents</a></li>
-            <li class="left"><a href="#">Requetes</a></li>
+            <li class="left"><a href="../Requetes/index.php">Requetes</a></li>
             <li class="left">Aide</li>
             <li class="right"><a href="../connexion/index.html">Deconnexion</a></li>
         </ul>

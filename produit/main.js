@@ -31,19 +31,13 @@ function verif(){
 
 }
 function vf(a){
-    let nc = 0;
-    let nn = 0 ; 
-    let vr = a.toUpperCase();
-    for(let i = 0 ; i<vr.length; i++){
-        if(("A"<=vr.charAt(i) && vr.charAt(i)<="Z")){
-            nc = nc+1;
-        }else if (("0"<=vr.charAt(i) && vr.charAt(i)<="9")){
-            nn = nn+1
+    let nb = 0 
+    let i = 0
+    let vr = a.toUpperCase()
+    for( i = 0 ; i<vr.length ; i++){
+        if(("A"<=vr.charAt(i)&&vr.charAt(i)<="Z")||("0"<=vr.charAt(i)&&vr.charAt(i)<="9")){
+            nb = nb+1
         }
     }
-    if(nn!=0 && nc!=0 && (nn+nc) == vr.length){
-        return true;
-    }else{
-        return false;
-    }
+    return nb == vr.length 
 }

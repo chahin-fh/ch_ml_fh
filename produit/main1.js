@@ -4,17 +4,23 @@ function verif(){
     let prix = document.getElementById("prix").value;
     if (code.length==0){
         alert("Donner le code De produit!!");
+        return false
     }else if (nom.length==0){
         alert("Donner le nom De produit!!");
+        return false
     }else if (prix.length==0){
         alert("Donner le Prix De produit!!");
+        return false
     }else{
         if (code(code)==false || code.length<8) {
             alert("Verifer le code De produit");
+            return false
         }else if (nom(nom)==false || nom.length<8){
             alert("Verifer le nom De produit");
+            return false
         }else if (prix(prix)==false){
             alert("Verifer le prix De produit");
+            return false
         }
     }
 }
