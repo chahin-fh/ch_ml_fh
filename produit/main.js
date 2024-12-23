@@ -27,6 +27,12 @@ function verif(){
         document.getElementById("e2").innerHTML = "";
         document.getElementById("e4").innerHTML ="enti b mo5k tw !!!!!!!!";
         return false;
+    }else{
+        document.getElementById("e3").innerHTML = "";
+        document.getElementById("e1").innerHTML = "";
+        document.getElementById("e2").innerHTML = "";
+        document.getElementById("e4").innerHTML ="";
+        document.getElementById("msg").innerHTML = "il produit tsajal jwou behi"
     }
 
 }

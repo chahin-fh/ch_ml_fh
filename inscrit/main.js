@@ -6,7 +6,7 @@ function verif() {
     let flous = document.getElementById("flous").value;
     if (nom == "") {
         document.getElementById("e3").innerHTML = "";
-        document.getElementById("e1").innerHTML = "il ism fari8 ";
+        document.getElementById("e1").innerHTML = "il ism fari8";
         document.getElementById("e2").innerHTML = "";
         document.getElementById("e4").innerHTML =""
         document.getElementById("e5").innerHTML =""
@@ -40,7 +40,7 @@ function verif() {
         document.getElementById("e5").innerHTML =""
         return false;
     } else if (verif_mp2(mp2, mp1) == false) {
-        document.getElementById("e3").innerHTML = "iktib il passe bi shih";
+        document.getElementById("e3").innerHTML = "iktib il passe bi shih ";
         document.getElementById("e1").innerHTML = "";
         document.getElementById("e2").innerHTML = "";
         document.getElementById("e4").innerHTML =""
@@ -67,7 +67,14 @@ function verif() {
         document.getElementById("e4").innerHTML =""
         document.getElementById("e5").innerHTML ="i5tar haja"
         return false;
-    } 
+    }else{
+        document.getElementById("msg").innerHTML = "ahla bik fi wistna"
+        document.getElementById("e3").innerHTML = "";
+        document.getElementById("e1").innerHTML = "";
+        document.getElementById("e2").innerHTML = "";
+        document.getElementById("e4").innerHTML =""
+        document.getElementById("e5").innerHTML =""
+    }
 }
 function verif_nom(ch) {
     let i = 0;

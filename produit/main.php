@@ -17,7 +17,8 @@ if($nb>0){
         $res9 = mysqli_query($cnx,$req5) or die("problim l13");
         $nb5 = mysqli_affected_rows($cnx);
         if($nb5<1) die("problem");
-        echo"le produit est enregistree avec succes";
+        sleep(3);
+        header("location:../produit/index.html");
     }else{
         die("fama moshkla");
     }
