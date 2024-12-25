@@ -34,7 +34,6 @@
             <thead>
                 <tr>
                     <th>Produit</th>
-                    <th>Prix</th>
                     <th>Quantité</th>
                     <th>Date</th>
                     <th>Annuler une vente</th>
@@ -43,38 +42,35 @@
             <tbody>
             <?php
                 include("../connect.php");
-
+                session_start();
+                $id = $_SESSION['id'];
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $requete_date = isset($_POST['requete']) ? $_POST['requete'] : null;
-
                     if ($requete_date) {
-                        $stmt = $cnx->prepare("SELECT id, , prix, quantite, date FROM vent WHERE date = ?");
-                        $stmt->bind_param("s", $requete_date);
+                        $stmt = $cnx->prepare("SELECT nomP, q, d FROM vent WHERE d = ?");
+                        $stmt->bind_param("s", $requete_date);  // Ligne corrigée
                         $stmt->execute();
                         $result = $stmt->get_result();
-
                         if ($result->num_rows > 0) {
                             while ($donnees = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($donnees['produit']) . "</td>";
-                                echo "<td>" . htmlspecialchars($donnees['prix']) . "</td>";
-                                echo "<td>" . htmlspecialchars($donnees['quantite']) . "</td>";
-                                echo "<td>" . htmlspecialchars($donnees['date']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['nomP']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['q']) . "</td>";
+                                echo "<td>" . htmlspecialchars($donnees['d']) . "</td>";
                                 echo "<td>
-                                        <form action='annuler.php' method='post'>
-                                            <input type='hidden' name='id' value='" . htmlspecialchars($donnees['id']) . "'>
-                                            <button type='submit' class='btn btn-danger'>Annuler</button>
-                                        </form>
+                                <form method='post' action='annuler.php'>
+                                    <button type='submit' class='btn btn-danger'>Annuler</button> 
+                                </form>  
                                       </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='5'>Aucune vente trouvée pour cette date.</td></tr>";
+                            echo "<tr><td>Aucune vente trouvée pour cette date.</td></tr>";
                         }
 
                         $stmt->close();
                     } else {
-                        echo "<tr><td colspan='5'>Aucune date n'a été fournie.</td></tr>";
+                        echo "<tr><td>Aucune date n'a été fournie.</td></tr>";
                     }
                 }
             ?>
