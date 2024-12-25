@@ -96,10 +96,7 @@ input[type="number"] {
 .refresh-button:hover {
     background-color: #1e88e5;
 }
-.message {
-    margin: 20px 0;
-    font-weight: bold;
-}
+
 table {
     width: 100%;
     border-collapse: collapse;
