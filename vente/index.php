@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect options and quantities
     $arr1 = [$opt_0, $opt_1, $opt_2];
     $arr2 = [$quant_0, $quant_1, $quant_2];
-
+    $arr = [...$arr1];
     // Current date
     $d = date("Y-m-d");
 
@@ -132,11 +132,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Section des ventes -->
      <?php 
-    $res5000 = mysqli_query($cnx,"SELECT prix,qua from produit ")
+    
      ?>
     <div class="sales-section">
-        <p class="message" id="m1"></p>
-        <p class="message" id="m2"></p>
+        <?php
+        for($i = 0 ; $i<3 ; $i++){
+        $s = 0;
+        $tot = 0;
+        $res5000 = mysqli_query($cnx,"SELECT prix,qua from produit where (nom = '$arr[$i]');");
+        $t = mysqli_fetch_array($res5000);
+        $s = $t[0]*$t[1];
+        $tot = $tot + $s;
+        echo"
+        <p class='message' id='m1'>$arr[$i] = $t[0] X $t[1] = $s</p>
+        <p class='message' id='m2'>montant total : $tot</p>
+        ";
+        sleep(1);
+        }
+        ?>
         <br><br>
         <a href="#" id="db">Voir la liste complète des ventes du jour</a> 
     </div>
