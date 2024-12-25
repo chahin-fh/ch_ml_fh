@@ -2,16 +2,29 @@
 include("../connect.php");
 session_start();
 $id = $_SESSION['id'];
-$res = mysqli_query($cnx,"SELECT nom,prix from produit where id = '$id';");
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-extract($_POST);
-$arr1 = [$opt_0 , $opt_1 , $opt_2];
-$arr2 = [$quant_0 , $quant_1 , $quant_2];
-$d = date("Y-m-d");
-for($i = 0 ; $i<3 ; $i++){
-$req = "INSERT INTO vent (DP,QV,Dv) VALUES ('$arr1[$i]','$arr2[$i]','$d');";
-$res = mysqli_query($cnx,$req);
-}
+$res = mysqli_query($cnx, "SELECT nom, prix FROM produit WHERE id = '$id';");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    extract($_POST);
+
+    // Collect options and quantities
+    $arr1 = [$opt_0, $opt_1, $opt_2];
+    $arr2 = [$quant_0, $quant_1, $quant_2];
+
+    // Current date
+    $d = date("Y-m-d");
+
+    // Loop through inputs and insert only non-empty pairs
+    for ($i = 0; $i < 3; $i++) {
+        if (!empty($arr1[$i]) && !empty($arr2[$i])) {
+            // Use prepared statements to prevent SQL injection
+            $stmt = $cnx->prepare("INSERT INTO vent (DP, QV, DV) VALUES (?, ?, ?)");
+            $stmt->bind_param("sis", $arr1[$i], $arr2[$i], $d);
+
+            // Execute statement
+            $stmt->execute();
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -118,23 +131,12 @@ $res = mysqli_query($cnx,$req);
     </div>
 
     <!-- Section des ventes -->
+     <?php 
+    $res5000 = mysqli_query($cnx,"SELECT prix,qua from produit ")
+     ?>
     <div class="sales-section">
         <p class="message" id="m1"></p>
         <p class="message" id="m2"></p>
-        <h2>Les dernières ventes enregistrées</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Désignation Produit</th>
-                    <th>Quantité Vendue</th>
-                    <th>Date de la Vente</th>
-                    <th>Annuler la vente</th>
-                </tr>
-            </thead>
-            <tbody id="sales-list">
-
-            </tbody>
-        </table>
         <br><br>
         <a href="#" id="db">Voir la liste complète des ventes du jour</a> 
     </div>
