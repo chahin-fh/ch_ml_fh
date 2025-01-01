@@ -3,7 +3,6 @@ include("../connect.php");
 session_start();
 $id = $_SESSION['id'];
 $res = mysqli_query($cnx, "SELECT nom, prix FROM produit WHERE id = '$id';");
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
 
@@ -14,21 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $arp = [...$arr2];
     // Current date
     $d = date("Y-m-d");
-    function button1($arr,$cnx,$j,$arp){
-        $tot = 0;
-        echo"<div style=' margin: 20px ;font-weight: bold; position : absolute; top:100px; left : 700px;'>";
-        for($i = 0 ; $i<$j ; $i++){
-        $s = 0;
-        $res5000 = mysqli_query($cnx,"SELECT prix from produit where (nom = '$arr[$i]');");
-        $t = mysqli_fetch_array($res5000);
-        $s = $arp[$i]*$t[0];
-        $tot = $tot + $s;
-        echo"
-        <p class='message' id='m1' style=''>$arr[$i] = $arp[$i] X $t[0] = $s</p><br>
-        ";
-        }
-        echo"<p class='message' id='m2'>montant total : $tot</p></div>";
-    }
         $j = 0;
     // Loop through inputs and insert only non-empty pairs
     for ($i = 0; $i < 3; $i++) {
@@ -41,7 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
         }
     }
-    button1($arr,$cnx,$j,$arp);
+    $tot = 0;
+    echo"<div style=' margin: 20px ;font-weight: bold; position : absolute; top:100px; left : 700px;'>";
+    for($i = 0 ; $i<$j ; $i++){
+    $s = 0;
+    $res5000 = mysqli_query($cnx,"SELECT prix from produit where (nom = '$arr[$i]');");
+    $t = mysqli_fetch_array($res5000);
+    $s = $arp[$i]*$t[0];
+    $tot = $tot + $s;
+    echo"
+    <p class='message' id='m1' style=''>$arr[$i] = $arp[$i] X $t[0] = $s</p><br>
+    ";
+    }
+    echo"<p class='message' id='m2'>montant total : $tot</p></div>";
+
 }
 ?>
 <!DOCTYPE html>
